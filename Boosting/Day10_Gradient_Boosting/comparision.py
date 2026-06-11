@@ -13,7 +13,9 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.30, rand
 adaptive_model = AdaBoostClassifier(n_estimators = 100, learning_rate = 0.5, random_state = 42)
 adaptive_model.fit(x_train, y_train)
 
-gradient_model = GradientBoostingClassifier(n_estimators = 100, learning_rate = 0.1, max_depth = 1, random_state = 42)
+#Stochastic Gradient Boosting - Splits the data into 2 halves like Bagging from Random Forest
+# subsample = 0.8 means the model picks 80% dataset row randomly leaving 20% away every single round
+gradient_model = GradientBoostingClassifier(n_estimators = 100, learning_rate = 0.1, max_depth = 1, subsample = 0.8, random_state = 42)
 gradient_model.fit(x_train, y_train)
 
 adaptive_model_accuracy = accuracy_score(y_test, adaptive_model.predict(x_test))
