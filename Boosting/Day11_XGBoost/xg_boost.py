@@ -23,4 +23,12 @@ xgradient_model_accuracy = accuracy_score(y_test, xgradient_model.predict(x_test
 
 print("--- Comparision Between Gradient and Extreme Gradient Boosting ---")
 print(f"Gradient Model Accuracy: {gradient_model_accuracy * 100:.2f}%")
-print(f"Extreme Gradient Model Accuracy (XGBoost): {xgradient_model_accuracy * 100:.2f}%")
+print(f"Extreme Gradient Model Accuracy (XGBoost): {xgradient_model_accuracy * 100:.2f}%\n")
+
+# Check training accuracy
+train_score_gb = accuracy_score(y_train, gradient_model.predict(x_train))
+train_score_xgb = accuracy_score(y_train, xgradient_model.predict(x_train))
+
+print("--- Training Accuracy between Gradient and xGradient Boosting ---")
+print(f"Gradient Model Accuracy on training data: {train_score_gb * 100:.2f}%")
+print(f"Extreme Gradient Model Accuracy: {train_score_xgb * 100:.2f}%")
