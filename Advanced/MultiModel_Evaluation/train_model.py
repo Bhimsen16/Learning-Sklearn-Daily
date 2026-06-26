@@ -12,6 +12,9 @@ from sklearn.metrics import classification_report
 print("Loading customer data ....")
 df = pd.read_csv("Customer_analytics.csv")
 
+print("\n---- Checking Feature Means By Churn Status ----")
+print(df.groupby('churned').mean(numeric_only=True))
+
 X = df.drop(columns = ["customer_id", "churned"])
 y = df["churned"]
 
@@ -35,9 +38,12 @@ print("Preprocessing pipeline constructed successfully.")
 
 # Define the models 
 models = {
-    "Decision Tree": DecisionTreeClassifier(random_state = 42),
-    "Random Forest": RandomForestClassifier(random_state = 42),
-    "Gradient Boosting": GradientBoostingClassifier(random_state = 42),
+    "Decision Tree (Balanced)": DecisionTreeClassifier(random_state = 42, class_weight = 'balanced'),
+    "Random Forest (Balanced)": RandomForestClassifier(random_state = 42, 
+                                                       class_weight = 'balanced',
+                                                       max_depth=5,
+                                                       min_samples_leaf=2),
+    "Gradient Boosting (Baseline)": GradientBoostingClassifier(random_state = 42),
 }
 
 print("\nStarting the Model Showdown ....")
