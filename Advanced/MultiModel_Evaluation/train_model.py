@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import  Pipeline
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 
 print("Loading customer data ....")
 df = pd.read_csv("Customer_analytics.csv")
@@ -63,3 +63,7 @@ for name, model in models.items():
 
     print(f"\n ---- {name} Results ----")
     print(classification_report(y_test, y_pred))
+
+    print(f"---- {name} Confusion Matrix ----")
+    print(confusion_matrix(y_test, y_pred))
+    print("="*40)
