@@ -1,1 +1,4 @@
 *.csv
+
+# Model binaries
+*.pkl
