@@ -1,9 +1,10 @@
 # Practice on building OOP model trainer
 
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
@@ -44,6 +45,26 @@ class ModelTrainer:
             print("Train the model first!!")
             return None
 
+    # Plot Decision Flowchart
+    def visualize_tree(self, feature_names, class_names):
+        if self.is_trained and isinstance(self.model, DecisionTreeClassifier):
+            plt.figure(figsize= (14, 8))
+            plot_tree(
+                self.model, 
+                feature_names= feature_names, 
+                class_names= class_names,
+                filled= True, # Color nodes by majority class
+                rounded= True, # Roudned boxes
+                fontsize= 12,
+            )
+            plt.title("Decision Tree Decision Flowchart")
+            plt.show() 
+        elif not isinstance(self.model, DecisionTreeClassifier):
+            print("Tree visualization is specifically tailored for single DecisionTreeClassifier model!")
+
+        else:
+            print("Train the model first!")
+
 # Load dataset
 wine = load_wine()
 X = pd.DataFrame(wine.data, columns= wine.feature_names)
@@ -65,7 +86,9 @@ trainer.evaluate(X_test, y_test)
 trainer.train(X_train, y_train)
 trainer.evaluate(X_test, y_test)
 trainer.get_feature_importance(wine.feature_names)
+trainer.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names)
 
 trainer2.train(X_train, y_train)
 trainer2.evaluate(X_test, y_test)
 trainer2.get_feature_importance(wine.feature_names)
+trainer2.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names)
