@@ -46,24 +46,38 @@ class ModelTrainer:
             return None
 
     # Plot Decision Flowchart
-    def visualize_tree(self, feature_names, class_names):
-        if self.is_trained and isinstance(self.model, DecisionTreeClassifier):
-            plt.figure(figsize= (14, 8))
-            plot_tree(
-                self.model, 
-                feature_names= feature_names, 
-                class_names= class_names,
-                filled= True, # Color nodes by majority class
-                rounded= True, # Roudned boxes
-                fontsize= 12,
-            )
-            plt.title("Decision Tree Decision Flowchart")
-            plt.show() 
-        elif not isinstance(self.model, DecisionTreeClassifier):
-            print("Tree visualization is specifically tailored for single DecisionTreeClassifier model!")
+    def visualize_tree(self, feature_names, class_names, tree_index = 0):
+        # If the model is Random Forest, it plots the tree at tree_index
+
+        if not self.is_trained:
+            print("Train the model first!!")
+            return 
+
+        # Determine which model to plot
+        if isinstance(self.model, DecisionTreeClassifier):
+            tree_to_plot = self.model
+            title = "Decision Tree Flowchart"
+
+        elif isinstance(self.model, RandomForestClassifier):
+            # Extract individual tree from forest estimators list
+            tree_to_plot = self.model.estimators_[tree_index]
+            title = f"Random Forest - Individual Tree #{tree_index + 1} Flowchart"
 
         else:
-            print("Train the model first!")
+            print("Visualization is not supported for this model type!")
+            return
+
+        plt.figure(figsize= (14, 8))
+        plot_tree(
+            tree_to_plot,
+            feature_names= feature_names, 
+            class_names= class_names, 
+            filled= True,
+            rounded= True, 
+            fontsize= 12,
+        )
+        plt.title(title)
+        plt.show()
 
 # Load dataset
 wine = load_wine()
@@ -91,4 +105,4 @@ trainer.visualize_tree(feature_names= wine.feature_names, class_names= wine.targ
 trainer2.train(X_train, y_train)
 trainer2.evaluate(X_test, y_test)
 trainer2.get_feature_importance(wine.feature_names)
-trainer2.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names)
+trainer2.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names, tree_index= 1)
