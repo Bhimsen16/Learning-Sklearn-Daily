@@ -88,10 +88,10 @@ y = wine.target
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.2, random_state= 42)
 
 # Instantiate ModelTrainer with Decision Tree
-trainer = ModelTrainer(DecisionTreeClassifier, max_depth = 3, random_state = 42)
+trainer = ModelTrainer(DecisionTreeClassifier, max_depth = 3, min_samples_leaf = 5, random_state = 42)
 
 # Instantiate ModelTrainer with Random Forest
-trainer2 = ModelTrainer(RandomForestClassifier, max_depth = 3, random_state = 42)
+trainer2 = ModelTrainer(RandomForestClassifier, max_depth = 3, min_samples_leaf = 5, random_state = 42)
 
 # Evaluating before training
 trainer.evaluate(X_test, y_test)
