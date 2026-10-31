@@ -79,30 +79,31 @@ class ModelTrainer:
         plt.title(title)
         plt.show()
 
-# Load dataset
-wine = load_wine()
-X = pd.DataFrame(wine.data, columns= wine.feature_names)
-y = wine.target
+if __name__ == "__main__":
+    # Load dataset
+    wine = load_wine()
+    X = pd.DataFrame(wine.data, columns= wine.feature_names)
+    y = wine.target
 
 # Split the data
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.2, random_state= 42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.2, random_state= 42)
 
 # Instantiate ModelTrainer with Decision Tree
-trainer = ModelTrainer(DecisionTreeClassifier, max_depth = 3, min_samples_leaf = 5, random_state = 42)
+    trainer = ModelTrainer(DecisionTreeClassifier, max_depth = 3, min_samples_leaf = 5, random_state = 42)
 
 # Instantiate ModelTrainer with Random Forest
-trainer2 = ModelTrainer(RandomForestClassifier, max_depth = 3, min_samples_leaf = 5, random_state = 42)
+    trainer2 = ModelTrainer(RandomForestClassifier, max_depth = 3, min_samples_leaf = 5, random_state = 42)
 
 # Evaluating before training
-trainer.evaluate(X_test, y_test)
+    trainer.evaluate(X_test, y_test)
 
 # Train and Evaluate
-trainer.train(X_train, y_train)
-trainer.evaluate(X_test, y_test)
-trainer.get_feature_importance(wine.feature_names)
-trainer.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names)
+    trainer.train(X_train, y_train)
+    trainer.evaluate(X_test, y_test)
+    trainer.get_feature_importance(wine.feature_names)
+    trainer.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names)
 
-trainer2.train(X_train, y_train)
-trainer2.evaluate(X_test, y_test)
-trainer2.get_feature_importance(wine.feature_names)
-trainer2.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names, tree_index= 1)
+    trainer2.train(X_train, y_train)
+    trainer2.evaluate(X_test, y_test)
+    trainer2.get_feature_importance(wine.feature_names)
+    trainer2.visualize_tree(feature_names= wine.feature_names, class_names= wine.target_names, tree_index= 1)
